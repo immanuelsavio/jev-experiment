@@ -10,7 +10,7 @@ if (!ticket) {
 }
 
 const result = await generateText({
-  model: 'openai/gpt-5-nano',
+  model: 'meta/llama-3.3-70b',
 
   output: Output.object({
     schema: z.object({

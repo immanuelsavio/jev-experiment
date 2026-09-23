@@ -1,0 +1,2136 @@
+{
+  "summary": {
+    "generatedAt": "2026-09-19T01:39:25.917Z",
+    "experiment": "choice-agent-routing",
+    "cases": 40,
+    "choices": [
+      "knowledge_base",
+      "account_tool",
+      "billing_tool",
+      "human_escalation"
+    ],
+    "criteria": {
+      "knowledge_base": "A general product, documentation, capability, policy, or informational question that can be answered from trusted documentation without changing user-specific data.",
+      "account_tool": "A user-specific account operation involving login, profile information, workspace membership, roles, permissions, or normal account access.",
+      "billing_tool": "A payment, charge, invoice, refund, subscription, renewal, plan change, or payment-method transaction.",
+      "human_escalation": "A security compromise, suspected unauthorized activity, destructive or irreversible high-risk request, legal/compliance judgment, or situation requiring human review."
+    },
+    "models": {
+      "jev": "typesafe-ai/jev",
+      "nano": "openai/gpt-5-nano",
+      "luna": "openai/gpt-5.6-luna",
+      "llama": "meta/llama-3.3-70b"
+    },
+    "jev": {
+      "accuracy": 1,
+      "macroAccuracy": 1,
+      "perClass": {
+        "knowledge_base": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "account_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "billing_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "human_escalation": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        }
+      },
+      "multiclassBrier": 0.00061375,
+      "meanConfidenceCorrect": 0.98675,
+      "meanConfidenceIncorrect": null,
+      "latency": {
+        "mean": 334.2414958750002,
+        "median": 304.15495899999223,
+        "p95": 449.6376660000001,
+        "min": 232.96800000002258,
+        "max": 677.124708000003
+      }
+    },
+    "nano": {
+      "accuracy": 0.5,
+      "macroAccuracy": 0.5,
+      "perClass": {
+        "knowledge_base": {
+          "correct": 9,
+          "total": 10,
+          "accuracy": 0.9
+        },
+        "account_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "billing_tool": {
+          "correct": 0,
+          "total": 10,
+          "accuracy": 0
+        },
+        "human_escalation": {
+          "correct": 1,
+          "total": 10,
+          "accuracy": 0.1
+        }
+      },
+      "multiclassBrier": 0.17784375000000002,
+      "meanConfidenceCorrect": 0.7075000000000002,
+      "meanConfidenceIncorrect": 0.7224999999999999,
+      "latency": {
+        "mean": 1223.2834302499982,
+        "median": 1116.9039579999953,
+        "p95": 1662.585625000007,
+        "min": 961.0620839999756,
+        "max": 2413.3829589999987
+      }
+    },
+    "luna": {
+      "accuracy": 1,
+      "macroAccuracy": 1,
+      "perClass": {
+        "knowledge_base": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "account_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "billing_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "human_escalation": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        }
+      },
+      "multiclassBrier": 0.004825937500000001,
+      "meanConfidenceCorrect": 0.9110000000000003,
+      "meanConfidenceIncorrect": null,
+      "latency": {
+        "mean": 2869.065474975,
+        "median": 1265.541292000009,
+        "p95": 7043.085332999995,
+        "min": 837.4635000000017,
+        "max": 34888.112291
+      }
+    },
+    "llama": {
+      "accuracy": 1,
+      "macroAccuracy": 1,
+      "perClass": {
+        "knowledge_base": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "account_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "billing_tool": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        },
+        "human_escalation": {
+          "correct": 10,
+          "total": 10,
+          "accuracy": 1
+        }
+      },
+      "multiclassBrier": 0.006358749999999999,
+      "meanConfidenceCorrect": 0.8937500000000004,
+      "meanConfidenceIncorrect": null,
+      "latency": {
+        "mean": 582.581891675001,
+        "median": 550.7012080000131,
+        "p95": 747.418250000017,
+        "min": 454.1512910000165,
+        "max": 1006.3002500000002
+      }
+    },
+    "speedup": {
+      "nano": 3.6721543573452764,
+      "luna": 4.160843854595977,
+      "llama": 1.8105942109595103
+    }
+  },
+  "results": [
+    {
+      "id": 1,
+      "text": "Where can I find the API documentation?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "knowledge_base": 1,
+        "account_tool": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 675.57275,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.6,
+        "account_tool": 0.15,
+        "billing_tool": 0.05,
+        "human_escalation": 0.2
+      },
+      "nanoConfidence": 0.6,
+      "nanoCorrect": true,
+      "nanoBrier": 0.05625000000000001,
+      "nanoLatencyMs": 1150.364959,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 1115.1398749999998,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 595.490792
+    },
+    {
+      "id": 2,
+      "text": "Does the product support SAML single sign-on?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "knowledge_base": 1,
+        "human_escalation": 0,
+        "billing_tool": 0,
+        "account_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 449.6376660000001,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.5,
+        "account_tool": 0.25,
+        "billing_tool": 0.1,
+        "human_escalation": 0.15
+      },
+      "nanoConfidence": 0.5,
+      "nanoCorrect": true,
+      "nanoBrier": 0.08625000000000001,
+      "nanoLatencyMs": 1015.538125,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 869.8209580000002,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0.03,
+        "billing_tool": 0.01,
+        "human_escalation": 0.01
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0009000000000000011,
+      "llamaLatencyMs": 597.2924169999997
+    },
+    {
+      "id": 3,
+      "text": "What is the difference between the Pro and Enterprise plans?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "knowledge_base": 0.98,
+        "human_escalation": 0,
+        "billing_tool": 0.02
+      },
+      "jevConfidence": 0.98,
+      "jevCorrect": true,
+      "jevBrier": 0.0002000000000000002,
+      "jevLatencyMs": 264.76758400000017,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.65,
+        "account_tool": 0.15,
+        "billing_tool": 0.1,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.65,
+      "nanoCorrect": true,
+      "nanoBrier": 0.04125,
+      "nanoLatencyMs": 1095.6034579999996,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 1003.9689170000001,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.9,
+        "account_tool": 0.05,
+        "billing_tool": 0.05,
+        "human_escalation": 0
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 559.7625829999997
+    },
+    {
+      "id": 4,
+      "text": "Which countries are supported?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "knowledge_base": 1,
+        "human_escalation": 0,
+        "billing_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 326.8807080000006,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.75,
+        "account_tool": 0.1,
+        "billing_tool": 0.05,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": true,
+      "nanoBrier": 0.021250000000000005,
+      "nanoLatencyMs": 1124.4964579999996,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 1028.1632499999996,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 496.73391699999956
+    },
+    {
+      "id": 5,
+      "text": "How long is customer data retained after cancellation?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "human_escalation": 0,
+        "billing_tool": 0,
+        "account_tool": 0,
+        "knowledge_base": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 255.9199580000004,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.45,
+        "account_tool": 0.3,
+        "billing_tool": 0.15,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.45,
+      "nanoCorrect": true,
+      "nanoBrier": 0.10625000000000002,
+      "nanoLatencyMs": 979.8101669999996,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.97,
+        "account_tool": 0.01,
+        "billing_tool": 0.01,
+        "human_escalation": 0.01
+      },
+      "lunaConfidence": 0.97,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0003000000000000004,
+      "lunaLatencyMs": 1158.8966249999994,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.9,
+        "account_tool": 0.05,
+        "billing_tool": 0.05,
+        "human_escalation": 0
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 582.5126249999994
+    },
+    {
+      "id": 6,
+      "text": "Does the API have rate limits?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "human_escalation": 0,
+        "account_tool": 0,
+        "knowledge_base": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 351.5570829999997,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.6,
+        "account_tool": 0.15,
+        "billing_tool": 0.1,
+        "human_escalation": 0.15
+      },
+      "nanoConfidence": 0.6,
+      "nanoCorrect": true,
+      "nanoBrier": 0.053750000000000006,
+      "nanoLatencyMs": 2413.3829589999987,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.005,
+        "billing_tool": 0.005,
+        "human_escalation": 0.01
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0001375000000000002,
+      "lunaLatencyMs": 1175.7281670000011,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 564.2504169999993
+    },
+    {
+      "id": 7,
+      "text": "Do you integrate with Salesforce?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "human_escalation": 0,
+        "account_tool": 0,
+        "knowledge_base": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 323.3121250000004,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.2,
+        "account_tool": 0.4,
+        "billing_tool": 0.1,
+        "human_escalation": 0.3
+      },
+      "nanoConfidence": 0.4,
+      "nanoCorrect": false,
+      "nanoBrier": 0.22500000000000003,
+      "nanoLatencyMs": 1053.482500000002,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 4919.825459,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 772.786709
+    },
+    {
+      "id": 8,
+      "text": "Where can I download your SOC 2 report?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "knowledge_base": 0.83,
+        "billing_tool": 0,
+        "account_tool": 0.01,
+        "human_escalation": 0.16
+      },
+      "jevConfidence": 0.83,
+      "jevCorrect": true,
+      "jevBrier": 0.013650000000000002,
+      "jevLatencyMs": 405.044249999999,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.6,
+        "account_tool": 0.1,
+        "billing_tool": 0.05,
+        "human_escalation": 0.25
+      },
+      "nanoConfidence": 0.6,
+      "nanoCorrect": true,
+      "nanoBrier": 0.05875000000000001,
+      "nanoLatencyMs": 1107.3590000000004,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.005,
+        "billing_tool": 0.005,
+        "human_escalation": 0.01
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0001375000000000002,
+      "lunaLatencyMs": 837.4635000000017,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 554.2731249999997
+    },
+    {
+      "id": 9,
+      "text": "Can users export reports as CSV?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "account_tool": 0,
+        "knowledge_base": 1,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 271.6285830000015,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.65,
+        "account_tool": 0.2,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.65,
+      "nanoCorrect": true,
+      "nanoBrier": 0.04375,
+      "nanoLatencyMs": 1204.2182500000017,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 1134.1389999999992,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 538.8301249999968
+    },
+    {
+      "id": 10,
+      "text": "How many projects are included in the Enterprise plan?",
+      "expected": "knowledge_base",
+      "jevChoice": "knowledge_base",
+      "jevProbabilities": {
+        "human_escalation": 0,
+        "knowledge_base": 0.96,
+        "billing_tool": 0.04,
+        "account_tool": 0
+      },
+      "jevConfidence": 0.96,
+      "jevCorrect": true,
+      "jevBrier": 0.0008000000000000008,
+      "jevLatencyMs": 392.1110000000044,
+      "nanoChoice": "knowledge_base",
+      "nanoProbabilities": {
+        "knowledge_base": 0.6,
+        "account_tool": 0.2,
+        "billing_tool": 0.15,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.6,
+      "nanoCorrect": true,
+      "nanoBrier": 0.05625000000000001,
+      "nanoLatencyMs": 1031.9725000000035,
+      "lunaChoice": "knowledge_base",
+      "lunaProbabilities": {
+        "knowledge_base": 0.98,
+        "account_tool": 0.01,
+        "billing_tool": 0.005,
+        "human_escalation": 0.005
+      },
+      "lunaConfidence": 0.98,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00013750000000000017,
+      "lunaLatencyMs": 1155.3893749999988,
+      "llamaChoice": "knowledge_base",
+      "llamaProbabilities": {
+        "knowledge_base": 0.95,
+        "account_tool": 0,
+        "billing_tool": 0.03,
+        "human_escalation": 0.02
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0009500000000000012,
+      "llamaLatencyMs": 473.48649999999907
+    },
+    {
+      "id": 11,
+      "text": "I forgot my password and need to reset it.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "account_tool": 1,
+        "knowledge_base": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 299.8029170000009,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1113.187582999999,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.15,
+        "account_tool": 0.82,
+        "billing_tool": 0.01,
+        "human_escalation": 0.02
+      },
+      "lunaConfidence": 0.82,
+      "lunaCorrect": true,
+      "lunaBrier": 0.013850000000000005,
+      "lunaLatencyMs": 1287.018541999998,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 514.8171670000011
+    },
+    {
+      "id": 12,
+      "text": "Please change the email address associated with my account.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "billing_tool": 0,
+        "account_tool": 1,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 266.0206670000043,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1155.3282499999987,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0.02,
+        "human_escalation": 0.03
+      },
+      "lunaConfidence": 0.9,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0034499999999999986,
+      "lunaLatencyMs": 1100.271624999994,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 612.596000000005
+    },
+    {
+      "id": 13,
+      "text": "Add my coworker as an administrator.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "human_escalation": 0.01,
+        "billing_tool": 0,
+        "account_tool": 0.99
+      },
+      "jevConfidence": 0.99,
+      "jevCorrect": true,
+      "jevBrier": 0.00005000000000000005,
+      "jevLatencyMs": 346.05958400000236,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1128.176707999999,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.94,
+        "billing_tool": 0.01,
+        "human_escalation": 0.04
+      },
+      "lunaConfidence": 0.94,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0013500000000000016,
+      "lunaLatencyMs": 3045.0960419999974,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 632.2282919999998
+    },
+    {
+      "id": 14,
+      "text": "I can sign in but I don't have permission to open analytics.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "account_tool": 1,
+        "human_escalation": 0,
+        "knowledge_base": 0,
+        "billing_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 275.2874159999992,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.1,
+        "account_tool": 0.75,
+        "billing_tool": 0.05,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": true,
+      "nanoBrier": 0.021250000000000005,
+      "nanoLatencyMs": 1157.6151670000036,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.15,
+        "account_tool": 0.8,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.8,
+      "lunaCorrect": true,
+      "lunaBrier": 0.016249999999999994,
+      "lunaLatencyMs": 1161.4129580000008,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 494.9203339999949
+    },
+    {
+      "id": 15,
+      "text": "Two-factor authentication codes are still going to my old phone.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.06,
+        "account_tool": 0.9400000000000001
+      },
+      "jevConfidence": 0.9400000000000001,
+      "jevCorrect": true,
+      "jevBrier": 0.0017999999999999982,
+      "jevLatencyMs": 281.38354199999594,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1072.2097080000021,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0,
+        "human_escalation": 0.2
+      },
+      "lunaConfidence": 0.75,
+      "lunaCorrect": true,
+      "lunaBrier": 0.026250000000000002,
+      "lunaLatencyMs": 1159.5096249999988,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 739.460957999996
+    },
+    {
+      "id": 16,
+      "text": "Remove a former employee from our workspace.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "account_tool": 0.99,
+        "billing_tool": 0,
+        "knowledge_base": 0,
+        "human_escalation": 0.01
+      },
+      "jevConfidence": 0.99,
+      "jevCorrect": true,
+      "jevBrier": 0.00005000000000000005,
+      "jevLatencyMs": 253.08629099999962,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1138.3478329999998,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.95,
+        "billing_tool": 0.01,
+        "human_escalation": 0.02
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0008500000000000011,
+      "lunaLatencyMs": 2254.600915999996,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 729.4389580000061
+    },
+    {
+      "id": 17,
+      "text": "I need to update the name shown on my profile.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "account_tool": 1,
+        "knowledge_base": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 390.6359589999993,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1089.1447919999991,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0.01,
+        "human_escalation": 0.04
+      },
+      "lunaConfidence": 0.9,
+      "lunaCorrect": true,
+      "lunaBrier": 0.003549999999999999,
+      "lunaLatencyMs": 2043.9143750000003,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 496.81670799999847
+    },
+    {
+      "id": 18,
+      "text": "My teammate needs access to our shared project.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "account_tool": 1,
+        "knowledge_base": 0,
+        "billing_tool": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 418.9701249999998,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1116.9039579999953,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.9,
+      "lunaCorrect": true,
+      "lunaBrier": 0.003749999999999999,
+      "lunaLatencyMs": 1165.6177919999973,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 654.747374999999
+    },
+    {
+      "id": 19,
+      "text": "I accidentally removed my own administrator permission.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "account_tool": 0.89,
+        "billing_tool": 0,
+        "knowledge_base": 0,
+        "human_escalation": 0.11
+      },
+      "jevConfidence": 0.89,
+      "jevCorrect": true,
+      "jevBrier": 0.00605,
+      "jevLatencyMs": 440.11037500000384,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1629.5753750000003,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.03,
+        "account_tool": 0.78,
+        "billing_tool": 0.01,
+        "human_escalation": 0.18
+      },
+      "lunaConfidence": 0.78,
+      "lunaCorrect": true,
+      "lunaBrier": 0.020449999999999996,
+      "lunaLatencyMs": 2352.0208330000023,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.04999999999999999,
+        "account_tool": 0.7999999999999998,
+        "billing_tool": 0.04999999999999999,
+        "human_escalation": 0.09999999999999998
+      },
+      "llamaConfidence": 0.7999999999999998,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013750000000000016,
+      "llamaLatencyMs": 520.1324590000004
+    },
+    {
+      "id": 20,
+      "text": "Please transfer workspace ownership to my manager.",
+      "expected": "account_tool",
+      "jevChoice": "account_tool",
+      "jevProbabilities": {
+        "account_tool": 0.95,
+        "billing_tool": 0,
+        "human_escalation": 0.05,
+        "knowledge_base": 0
+      },
+      "jevConfidence": 0.95,
+      "jevCorrect": true,
+      "jevBrier": 0.0012500000000000011,
+      "jevLatencyMs": 364.26466600000276,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999997,
+      "nanoLatencyMs": 1028.2974170000089,
+      "lunaChoice": "account_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.78,
+        "billing_tool": 0.01,
+        "human_escalation": 0.19
+      },
+      "lunaConfidence": 0.78,
+      "lunaCorrect": true,
+      "lunaBrier": 0.021249999999999998,
+      "lunaLatencyMs": 34888.112291,
+      "llamaChoice": "account_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.9,
+        "billing_tool": 0,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.9,
+      "llamaCorrect": true,
+      "llamaBrier": 0.003749999999999999,
+      "llamaLatencyMs": 658.5984170000011
+    },
+    {
+      "id": 21,
+      "text": "I was charged twice for my subscription.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "billing_tool": 1,
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 395.73399999999674,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0.15,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": false,
+      "nanoBrier": 0.32249999999999995,
+      "nanoLatencyMs": 1623.6581250000017,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.01,
+        "billing_tool": 0.95,
+        "human_escalation": 0.02
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0008500000000000011,
+      "lunaLatencyMs": 1414.5398750000022,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.85,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.85,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0075000000000000015,
+      "llamaLatencyMs": 540.841499999995
+    },
+    {
+      "id": 22,
+      "text": "Please refund my most recent payment.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "billing_tool": 1,
+        "account_tool": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 304.15495899999223,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0.15,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": false,
+      "nanoBrier": 0.32249999999999995,
+      "nanoLatencyMs": 1072.0359159999934,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.01,
+        "billing_tool": 0.97,
+        "human_escalation": 0.01
+      },
+      "lunaConfidence": 0.97,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0003000000000000004,
+      "lunaLatencyMs": 1265.541292000009,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0.95,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.95,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0012500000000000011,
+      "llamaLatencyMs": 734.4709169999987
+    },
+    {
+      "id": 23,
+      "text": "I need a copy of last month's invoice.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "human_escalation": 0,
+        "account_tool": 0,
+        "knowledge_base": 0,
+        "billing_tool": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 301.9311250000028,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.2,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.28375,
+      "nanoLatencyMs": 1378.4197920000006,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.88,
+        "human_escalation": 0.02
+      },
+      "lunaConfidence": 0.88,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00495,
+      "lunaLatencyMs": 1994.1948339999944,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.8,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 523.8970419999969
+    },
+    {
+      "id": 24,
+      "text": "My credit card is being declined when I try to upgrade.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "billing_tool": 1,
+        "knowledge_base": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 677.124708000003,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.36375,
+      "nanoLatencyMs": 1150.934666999994,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.85,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.85,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0075000000000000015,
+      "lunaLatencyMs": 1167.6327500000043,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.8,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 560.4078330000048
+    },
+    {
+      "id": 25,
+      "text": "Cancel my subscription at the end of this billing period.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "knowledge_base": 0,
+        "human_escalation": 0,
+        "billing_tool": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 270.9346669999941,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.2,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.28375,
+      "nanoLatencyMs": 1051.7582919999986,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.03,
+        "billing_tool": 0.9,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.9,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0034499999999999986,
+      "lunaLatencyMs": 1229.9382500000065,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.8,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 524.6706249999988
+    },
+    {
+      "id": 26,
+      "text": "The invoice shows $129 but my contract says $89.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "billing_tool": 1,
+        "human_escalation": 0,
+        "account_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 372.1002920000028,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.2,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.28375,
+      "nanoLatencyMs": 1260.1704170000012,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05000000000000001,
+        "account_tool": 0.020000000000000004,
+        "billing_tool": 0.8500000000000001,
+        "human_escalation": 0.08000000000000002
+      },
+      "lunaConfidence": 0.8500000000000001,
+      "lunaCorrect": true,
+      "lunaBrier": 0.007949999999999995,
+      "lunaLatencyMs": 3578.8452909999905,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.85,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.85,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0075000000000000015,
+      "llamaLatencyMs": 493.37579099999857
+    },
+    {
+      "id": 27,
+      "text": "My approved refund has not appeared in my bank account.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "billing_tool": 1,
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "human_escalation": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 304.1813339999935,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0.15,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": false,
+      "nanoBrier": 0.32249999999999995,
+      "nanoLatencyMs": 1033.705707999994,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.02,
+        "billing_tool": 0.88,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.88,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0049499999999999995,
+      "lunaLatencyMs": 7043.085332999995,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.85,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.85,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0075000000000000015,
+      "llamaLatencyMs": 512.2473330000066
+    },
+    {
+      "id": 28,
+      "text": "Change the payment card used for our subscription.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "human_escalation": 0,
+        "billing_tool": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 292.7990829999908,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.36375,
+      "nanoLatencyMs": 961.0620839999756,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.03,
+        "billing_tool": 0.94,
+        "human_escalation": 0.01
+      },
+      "lunaConfidence": 0.94,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0012500000000000018,
+      "lunaLatencyMs": 1401.7854170000064,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.8,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 494.38916700001573
+    },
+    {
+      "id": 29,
+      "text": "We upgraded yesterday but are still being billed for both plans.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "human_escalation": 0,
+        "knowledge_base": 0,
+        "billing_tool": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 262.08766700001433,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.2,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.28375,
+      "nanoLatencyMs": 1475.2406670000055,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.02,
+        "billing_tool": 0.88,
+        "human_escalation": 0.05
+      },
+      "lunaConfidence": 0.88,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0049499999999999995,
+      "lunaLatencyMs": 846.6933750000026,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.8,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.013749999999999997,
+      "llamaLatencyMs": 454.1512910000165
+    },
+    {
+      "id": 30,
+      "text": "Our annual renewal payment failed.",
+      "expected": "billing_tool",
+      "jevChoice": "billing_tool",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "knowledge_base": 0,
+        "human_escalation": 0,
+        "billing_tool": 1
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 312.0767079999787,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.36375,
+      "nanoLatencyMs": 1088.770749999996,
+      "lunaChoice": "billing_tool",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.88,
+        "human_escalation": 0.02
+      },
+      "lunaConfidence": 0.88,
+      "lunaCorrect": true,
+      "lunaBrier": 0.00495,
+      "lunaLatencyMs": 1043.4237079999875,
+      "llamaChoice": "billing_tool",
+      "llamaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.05,
+        "billing_tool": 0.85,
+        "human_escalation": 0.05
+      },
+      "llamaConfidence": 0.85,
+      "llamaCorrect": true,
+      "llamaBrier": 0.0075000000000000015,
+      "llamaLatencyMs": 1006.3002500000002
+    },
+    {
+      "id": 31,
+      "text": "Someone changed my password and email address and I cannot regain control of the account.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "human_escalation": 1,
+        "account_tool": 0,
+        "billing_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 267.7758749999921,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.38875000000000004,
+      "nanoLatencyMs": 1107.053957999975,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.08,
+        "billing_tool": 0,
+        "human_escalation": 0.9
+      },
+      "lunaConfidence": 0.9,
+      "lunaCorrect": true,
+      "lunaBrier": 0.004199999999999999,
+      "lunaLatencyMs": 1371.896832999977,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0.2,
+        "billing_tool": 0,
+        "human_escalation": 0.8
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.019999999999999997,
+      "llamaLatencyMs": 640.2712080000201
+    },
+    {
+      "id": 32,
+      "text": "There are financial transactions in our account that nobody on our team made.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "account_tool": 0,
+        "human_escalation": 0.98,
+        "knowledge_base": 0,
+        "billing_tool": 0.02
+      },
+      "jevConfidence": 0.98,
+      "jevCorrect": true,
+      "jevBrier": 0.0002000000000000002,
+      "jevLatencyMs": 256.88341699997545,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.38875000000000004,
+      "nanoLatencyMs": 1010.7675840000156,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.04,
+        "billing_tool": 0.1,
+        "human_escalation": 0.85
+      },
+      "lunaConfidence": 0.85,
+      "lunaCorrect": true,
+      "lunaBrier": 0.008550000000000002,
+      "lunaLatencyMs": 2314.3335420000076,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 508.88562499999534
+    },
+    {
+      "id": 33,
+      "text": "An employee who left the company is currently accessing confidential customer records.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "account_tool": 0,
+        "human_escalation": 1,
+        "knowledge_base": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 257.49479200001224,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0.05,
+        "human_escalation": 0.15
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": false,
+      "nanoBrier": 0.32249999999999995,
+      "nanoLatencyMs": 1191.916459,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.04,
+        "billing_tool": 0,
+        "human_escalation": 0.95
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.001050000000000001,
+      "lunaLatencyMs": 9757.681333000015,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 459.0167080000101
+    },
+    {
+      "id": 34,
+      "text": "I exposed our production API key publicly and can see unknown requests using it.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "human_escalation": 1,
+        "billing_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 277.15124999999534,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.6,
+        "billing_tool": 0.15,
+        "human_escalation": 0.2
+      },
+      "nanoConfidence": 0.6,
+      "nanoCorrect": false,
+      "nanoBrier": 0.25625000000000003,
+      "nanoLatencyMs": 1187.8728330000013,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.03,
+        "account_tool": 0.12,
+        "billing_tool": 0.01,
+        "human_escalation": 0.84
+      },
+      "lunaConfidence": 0.84,
+      "lunaCorrect": true,
+      "lunaBrier": 0.010250000000000002,
+      "lunaLatencyMs": 2436.1264580000134,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 532.1788329999836
+    },
+    {
+      "id": 35,
+      "text": "Please permanently delete every customer record immediately. There is no backup.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "human_escalation": 1,
+        "knowledge_base": 0,
+        "billing_tool": 0,
+        "account_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 260.737374999997,
+      "nanoChoice": "human_escalation",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.1,
+        "billing_tool": 0.05,
+        "human_escalation": 0.8
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": true,
+      "nanoBrier": 0.013749999999999995,
+      "nanoLatencyMs": 1487.1655000000028,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.01,
+        "billing_tool": 0.01,
+        "human_escalation": 0.97
+      },
+      "lunaConfidence": 0.97,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0003000000000000004,
+      "lunaLatencyMs": 1192.7078330000222,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 619.9438749999972
+    },
+    {
+      "id": 36,
+      "text": "An unknown administrator was added to our company workspace.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "human_escalation": 0.97,
+        "knowledge_base": 0,
+        "billing_tool": 0,
+        "account_tool": 0.03
+      },
+      "jevConfidence": 0.97,
+      "jevCorrect": true,
+      "jevBrier": 0.0004500000000000004,
+      "jevLatencyMs": 308.4063330000208,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.8,
+        "billing_tool": 0.1,
+        "human_escalation": 0.05
+      },
+      "nanoConfidence": 0.8,
+      "nanoCorrect": false,
+      "nanoBrier": 0.38875000000000004,
+      "nanoLatencyMs": 1662.585625000007,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.13,
+        "billing_tool": 0.01,
+        "human_escalation": 0.84
+      },
+      "lunaConfidence": 0.84,
+      "lunaCorrect": true,
+      "lunaBrier": 0.010750000000000003,
+      "lunaLatencyMs": 5069.490332999994,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0.2,
+        "billing_tool": 0,
+        "human_escalation": 0.8
+      },
+      "llamaConfidence": 0.8,
+      "llamaCorrect": true,
+      "llamaBrier": 0.019999999999999997,
+      "llamaLatencyMs": 614.2069999999949
+    },
+    {
+      "id": 37,
+      "text": "We received a government request for customer data and need to know whether to release it.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "knowledge_base": 0,
+        "human_escalation": 1,
+        "billing_tool": 0,
+        "account_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 232.96800000002258,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.1,
+        "human_escalation": 0.15
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.30624999999999997,
+      "nanoLatencyMs": 1014.0063329999975,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 0.95
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0012500000000000011,
+      "lunaLatencyMs": 2240.673333999992,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 522.9931669999787
+    },
+    {
+      "id": 38,
+      "text": "Someone appears to be exporting thousands of customer records from our account right now.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "human_escalation": 1,
+        "account_tool": 0,
+        "knowledge_base": 0,
+        "billing_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 401.07050000000163,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.15,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.33125,
+      "nanoLatencyMs": 1811.1456659999967,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.04,
+        "billing_tool": 0,
+        "human_escalation": 0.95
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.001050000000000001,
+      "lunaLatencyMs": 1819.3408749999944,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 747.418250000017
+    },
+    {
+      "id": 39,
+      "text": "I want you to disable every administrator account in our production organization.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "human_escalation": 0.99,
+        "account_tool": 0.01,
+        "billing_tool": 0,
+        "knowledge_base": 0
+      },
+      "jevConfidence": 0.99,
+      "jevCorrect": true,
+      "jevBrier": 0.00005000000000000005,
+      "jevLatencyMs": 254.49191700000665,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.75,
+        "billing_tool": 0.1,
+        "human_escalation": 0.1
+      },
+      "nanoConfidence": 0.75,
+      "nanoCorrect": false,
+      "nanoBrier": 0.34625,
+      "nanoLatencyMs": 1036.3245829999796,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.01,
+        "account_tool": 0.04,
+        "billing_tool": 0,
+        "human_escalation": 0.95
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.001050000000000001,
+      "lunaLatencyMs": 1571.4110420000216,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 550.7012080000131
+    },
+    {
+      "id": 40,
+      "text": "Our security team believes the workspace has been compromised by an attacker.",
+      "expected": "human_escalation",
+      "jevChoice": "human_escalation",
+      "jevProbabilities": {
+        "billing_tool": 0,
+        "knowledge_base": 0,
+        "human_escalation": 1,
+        "account_tool": 0
+      },
+      "jevConfidence": 1,
+      "jevCorrect": true,
+      "jevBrier": 0,
+      "jevLatencyMs": 307.50258400000166,
+      "nanoChoice": "account_tool",
+      "nanoProbabilities": {
+        "knowledge_base": 0.05,
+        "account_tool": 0.7,
+        "billing_tool": 0.05,
+        "human_escalation": 0.2
+      },
+      "nanoConfidence": 0.7,
+      "nanoCorrect": false,
+      "nanoBrier": 0.28375,
+      "nanoLatencyMs": 1521.7270839999837,
+      "lunaChoice": "human_escalation",
+      "lunaProbabilities": {
+        "knowledge_base": 0.02,
+        "account_tool": 0.03,
+        "billing_tool": 0,
+        "human_escalation": 0.95
+      },
+      "lunaConfidence": 0.95,
+      "lunaCorrect": true,
+      "lunaBrier": 0.0009500000000000011,
+      "lunaLatencyMs": 1147.1671659999993,
+      "llamaChoice": "human_escalation",
+      "llamaProbabilities": {
+        "knowledge_base": 0,
+        "account_tool": 0,
+        "billing_tool": 0,
+        "human_escalation": 1
+      },
+      "llamaConfidence": 1,
+      "llamaCorrect": true,
+      "llamaBrier": 0,
+      "llamaLatencyMs": 473.7321660000016
+    }
+  ]
+}
