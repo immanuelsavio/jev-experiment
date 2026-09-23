@@ -1,417 +1,187 @@
-# Jev vs GPT-5 nano: Decision Model Benchmark
+# Jev vs general-purpose LLMs: decision benchmarks
 
-This project explores how [TypeSafe AI's Jev](https://www.typesafe.ai/) compares with a general-purpose LLM on a simple production-style decision task.
+Four small benchmarks comparing [TypeSafe AI's Jev](https://www.typesafe.ai/), a typed decision model, with three general-purpose LLMs on bounded decisions: routing, escalation and severity.
 
-Rather than comparing text generation quality, the experiment focuses on something Jev is designed for:
+Write-up: [Do You Need a Generative LLM for Every AI Decision?](https://immanuelsavio.com/blog/jev-decision-models)
 
-> **Fast, structured decisions.**
+All models are called through the Vercel AI Gateway:
 
-The benchmark compares:
+| Key     | Model                 |
+| ------- | --------------------- |
+| `jev`   | `typesafe-ai/jev`     |
+| `nano`  | `openai/gpt-5-nano`   |
+| `luna`  | `openai/gpt-5.6-luna` |
+| `llama` | `meta/llama-3.3-70b`  |
 
-- **Jev** — `typesafe-ai/jev`
-- **GPT-5 nano** — `openai/gpt-5-nano`
+## Question
 
-Both models are accessed through the **Vercel AI Gateway**.
+A lot of "AI" inside real systems is a bounded decision: which tool to call, whether to escalate, how severe something is. The set of answers is known up front. Do those decisions need a generative LLM, or is a model built for typed decisions a better fit?
 
----
+## Experiments
 
-## Why this experiment?
+Each experiment has 40 hand-labeled cases.
 
-A lot of AI applications use large language models for decisions that do not actually require text generation.
+| # | Experiment | Jev question type | Dataset | Script | Results |
+| - | ---------- | ----------------- | ------- | ------ | ------- |
+| 1 | Support routing + urgency (composed) | Choice + Boolean | `tickets.mjs` | `benchmark.mjs` | `results/01-support-routing-choice-boolean.json` |
+| 2 | Immediate escalation | Boolean | `boolean_cases.mjs` | `benchmark_boolean.mjs` | `results/02-boolean-escalation.json` |
+| 3 | Incident severity (0 to 4) | Score | `score_cases.mjs` | `benchmark_score.mjs` | `results/03-score-severity.json` |
+| 4 | Agent tool routing | Choice | `choice_cases.mjs` | `benchmark_choice.mjs` | `results/04-choice-agent-routing.json` |
 
-Examples include:
+1. **Composed.** Route a support ticket to `billing`, `technical`, `account` or `general` (10 each) and decide if it's urgent ("explicitly time-sensitive or completely blocked"). Both questions go to Jev in one `evaluate()` call.
+2. **Boolean.** Does the case need immediate escalation under an explicit policy: complete production/core outage, active security compromise or exposed credential, or a stated deadline within 60 minutes. 20 positive, 20 negative.
+3. **Score.** Severity on a five-level rubric (no incident, minor, moderate, high, critical). 8 cases per level.
+4. **Choice.** Route an agent request to `knowledge_base`, `account_tool`, `billing_tool` or `human_escalation`. 10 per class.
 
-- Which tool should an agent call?
-- Which team should receive a support ticket?
-- Should a workflow retry or stop?
-- Is an output acceptable?
-- Should a request be escalated?
-- Is something urgent?
+## Results
 
-Jev is designed specifically for these kinds of probabilistic decisions.
+| Experiment | Jev | GPT-5 nano | GPT-5.6 Luna | Llama 3.3 70B |
+| ---------- | --: | ---------: | -----------: | ------------: |
+| Boolean accuracy | **100%** | 97.5% | **100%** | **100%** |
+| Score rounded accuracy | 97.5% | 32.5% | **100%** | 95% |
+| Score MAE | **0.067** | 0.795 | 0.075 | 0.095 |
+| Choice accuracy | **100%** | 50% | **100%** | **100%** |
+| Composed routing | 97.5% | 95% | 95% | **100%** |
+| Composed urgency | 82.5% | **97.5%** | 92.5% | 72.5% |
+| Composed exact match | 80% | **92.5%** | 87.5% | 72.5% |
 
-The question behind this experiment is:
+Median latency:
 
-> **Do we need a general-purpose generative LLM for every decision inside an AI system?**
+| Experiment | Jev | GPT-5 nano | GPT-5.6 Luna | Llama 3.3 70B |
+| ---------- | --: | ---------: | -----------: | ------------: |
+| Composed | **289 ms** | 787 ms | 851 ms | 372 ms |
+| Boolean | **286 ms** | 796 ms | 1,014 ms | 382 ms |
+| Score | **315 ms** | 1,203 ms | 1,225 ms | 565 ms |
+| Choice | **304 ms** | 1,117 ms | 1,266 ms | 551 ms |
 
----
+p95 latency:
 
-## Task
+| Experiment | Jev | GPT-5 nano | GPT-5.6 Luna | Llama 3.3 70B |
+| ---------- | --: | ---------: | -----------: | ------------: |
+| Composed | **376 ms** | 1,348 ms | 2,278 ms | 526 ms |
+| Boolean | **401 ms** | 1,385 ms | 2,130 ms | 600 ms |
+| Score | **462 ms** | 1,893 ms | 2,762 ms | 1,168 ms |
+| Choice | **450 ms** | 1,663 ms | 7,043 ms | 747 ms |
 
-The benchmark uses a customer-support routing task.
+Notes:
 
-Each support ticket requires two decisions.
+- All 7 of Jev's composed urgency misses were over-escalations (labeled not urgent, predicted urgent). Luna and Llama over-escalated mostly the same tickets. The one-line urgency rule in experiment 1 is looser than the labels, so this is at least partly a spec problem, not only a model problem.
+- The standalone and composed Boolean runs use different datasets and instructions. They are not a controlled test of whether asking two questions at once hurts accuracy.
+- GPT-5 nano sent all 20 of its Choice misses to `account_tool`.
+- Brier scores are in the result files but 40 cases is too few to say anything general about calibration.
 
-### 1. Route
+## How each model is called
 
-The model must choose one of:
+Jev uses the AI SDK's `evaluate()` and returns typed answers directly:
 
-```text
-billing
-technical
-account
-general
-````
+```js
+import { experimental_evaluate as evaluate } from 'ai';
 
-### 2. Urgency
+const result = await evaluate({
+  model: 'typesafe-ai/jev',
+  state: ticket.text,
+  questions: {
+    route: {
+      type: 'choice',
+      instructions: 'Which team should handle this ticket?',
+      criteria: {
+        billing: 'Payments, charges, refunds, invoices, or subscriptions',
+        technical: 'Bugs, errors, outages, or broken functionality',
+        account: 'Login, permissions, or account access',
+        general: 'Anything else',
+      },
+    },
+    urgent: {
+      type: 'boolean',
+      instructions: 'Is the customer explicitly time-sensitive or completely blocked?',
+    },
+  },
+});
 
-The model must decide:
-
-```text
-urgent = true / false
+result.answers.route.choice;        // 'account'
+result.answers.route.probabilities; // { account: 1, technical: 0, ... }
+result.answers.urgent.probability;  // 0.96
 ```
 
-A ticket is considered urgent when the customer is explicitly time-sensitive or completely blocked.
+The LLMs get the same definitions in a prompt through `generateText()`, are asked to return only JSON, and the output is parsed and validated. In the composed experiment they return `{ route, urgent }` with `urgent` as a boolean. In the standalone Boolean, Score and Choice experiments they return a probability (or a probability per level or per class), so the metrics line up with Jev's.
 
-Example:
+Settings:
 
-```text
-"I cannot log into my account and I have a client demo in 10 minutes."
-```
-
-Expected result:
-
-```json
-{
-  "route": "account",
-  "urgent": true
-}
-```
-
----
-
-## Dataset
-
-The benchmark contains **40 manually labeled support tickets**.
-
-The dataset is balanced across four routing categories:
-
-| Category  | Tickets |
-| --------- | ------: |
-| Billing   |      10 |
-| Technical |      10 |
-| Account   |      10 |
-| General   |      10 |
-| **Total** |  **40** |
-
-The dataset includes both straightforward and intentionally overlapping cases.
-
-For example:
-
-```text
-"The payment screen throws an error before I can enter my card details."
-```
-
-Although the ticket mentions payment, the underlying problem is technical.
-
-Another example:
-
-```text
-"Our subscription expires today because the renewal payment failed
-and our team needs access for a client launch in one hour."
-```
-
-This combines billing, account access, and urgency signals.
-
-The labeled dataset is available in:
-
-```text
-tickets.mjs
-```
-
----
-
-## Models
-
-### Jev
-
-```text
-typesafe-ai/jev
-```
-
-Jev uses Vercel AI SDK's evaluation interface.
-
-Instead of generating text, it directly evaluates typed questions.
-
-For routing, Jev returns a probability distribution:
-
-```json
-{
-  "choice": "account",
-  "probabilities": {
-    "account": 1,
-    "technical": 0,
-    "billing": 0,
-    "general": 0
-  }
-}
-```
-
-For boolean decisions, Jev returns a probability:
-
-```json
-{
-  "probability": 0.96
-}
-```
-
-For this benchmark:
-
-```text
-probability >= 0.5 → true
-probability < 0.5 → false
-```
-
----
-
-### GPT-5 nano
-
-```text
-openai/gpt-5-nano
-```
-
-GPT-5 nano is used as the general-purpose LLM baseline.
-
-Its output is constrained using a Zod schema:
-
-```json
-{
-  "route": "account",
-  "urgent": true
-}
-```
-
-This keeps the output format comparable with Jev.
-
----
+- OpenAI models: `reasoning: 'minimal'`
+- Llama: `temperature: 0`
+- Boolean decisions: `probability >= 0.5` counts as `true` for every model
+- Score: Jev's continuous score is rounded for accuracy; MAE and RMSE use the raw value
 
 ## Metrics
 
-The benchmark measures:
+- **Accuracy** per question; exact match for the composed experiment (route and urgency both correct)
+- **Brier score** for Boolean and Choice probabilities
+- **MAE, RMSE, rounded accuracy, within-one accuracy** for Score
+- **Per-class accuracy** and mean confidence on correct vs incorrect answers for Choice
+- **Latency** from `performance.now()` around each model call: mean, median, p95, min, max
 
-### Accuracy
+## Methodology
 
-* Route accuracy
-* Urgency accuracy
-* Exact match accuracy
+- Each case is sent to all four models in a fixed order: Jev, nano, Luna, Llama. There is no warm-up request.
+- Failed calls are retried with backoff.
+- Progress is saved after every case to a `*-progress.json` file (git-ignored), so an interrupted run resumes where it stopped. Pass `--fresh` to start over.
+- Latencies are end-to-end from a laptop through the gateway, so network and provider load are included. Treat them as observed numbers, not a controlled infrastructure benchmark.
+- Each benchmark was run once, on 2026-09-19.
 
-Exact match requires both:
-
-```text
-route == expected route
-AND
-urgent == expected urgency
-```
-
-### Latency
-
-For every request:
-
-```javascript
-performance.now()
-```
-
-is measured before and after the model call.
-
-The benchmark reports:
-
-* Mean latency
-* Median latency
-* P95 latency
-* Minimum latency
-* Maximum latency
-
-Median and P95 are emphasized instead of relying on a single request.
-
----
-
-## Benchmark methodology
-
-Before collecting measurements, each model receives one warm-up request.
-
-The warm-up request is **not included in the final results**.
-
-For the 40 measured examples, execution order alternates:
-
-```text
-Ticket 1: Jev → GPT
-Ticket 2: GPT → Jev
-Ticket 3: Jev → GPT
-Ticket 4: GPT → Jev
-...
-```
-
-This reduces bias caused by one model always being called first.
-
-All raw results are saved to:
-
-```text
-benchmark-results.json
-```
-
----
-
-# Results
-
-> Results will be populated after running the benchmark.
-
-| Metric           | Jev | GPT-5 nano |
-| ---------------- | --: | ---------: |
-| Route accuracy   | TBD |        TBD |
-| Urgency accuracy | TBD |        TBD |
-| Exact match      | TBD |        TBD |
-| Median latency   | TBD |        TBD |
-| P95 latency      | TBD |        TBD |
-
----
-
-## Example result
-
-For:
-
-```text
-"I cannot log into my account and I have a client demo in 10 minutes."
-```
-
-Jev returned:
-
-```json
-{
-  "route": {
-    "choice": "account",
-    "probabilities": {
-      "account": 1,
-      "technical": 0,
-      "billing": 0,
-      "general": 0
-    }
-  },
-  "urgent": {
-    "probability": 0.96
-  }
-}
-```
-
-GPT-5 nano returned:
-
-```json
-{
-  "route": "account",
-  "urgent": true
-}
-```
-
-Both models made the same decision.
-
-The interesting difference is how they arrive at and expose that decision:
-
-```text
-Jev
-→ specialized probabilistic decision model
-→ returns probabilities directly
-
-GPT-5 nano
-→ general-purpose generative model
-→ constrained into structured output
-```
-
----
-
-## Running the experiment
-
-Install dependencies:
+## Running it
 
 ```bash
 npm install
 ```
 
-Create a `.env` file:
+Create `.env`:
 
 ```text
 AI_GATEWAY_API_KEY=your_vercel_ai_gateway_key
 ```
 
-Then run:
+Run any benchmark:
 
 ```bash
-node benchmark.mjs
+node benchmark.mjs            # 1. composed routing + urgency
+node benchmark_boolean.mjs    # 2. escalation
+node benchmark_score.mjs      # 3. severity
+node benchmark_choice.mjs     # 4. agent tool routing
+
+node benchmark_score.mjs --fresh   # ignore saved progress and rerun
 ```
 
-Raw benchmark data will be written to:
+Quick single-ticket checks:
 
-```text
-benchmark-results.json
+```bash
+node jev_bridge.mjs "I cannot log into my account and I have a client demo in 10 minutes."
+node gpt_router.mjs "I cannot log into my account and I have a client demo in 10 minutes."
 ```
 
----
+`gpt_router.mjs` uses a Zod schema via `Output.object`. Change its `model` to try other gateway models.
 
 ## Project structure
 
 ```text
 .
-├── benchmark.mjs
-├── benchmark-results.json
-├── gpt_router.mjs
-├── jev_bridge.mjs
-├── tickets.mjs
-├── package.json
-└── README.md
+├── benchmark.mjs              # 1. composed Choice + Boolean
+├── benchmark_boolean.mjs      # 2. Boolean escalation
+├── benchmark_score.mjs        # 3. Score severity
+├── benchmark_choice.mjs       # 4. Choice agent routing
+├── tickets.mjs                # dataset for 1
+├── boolean_cases.mjs          # dataset for 2
+├── score_cases.mjs            # dataset for 3
+├── choice_cases.mjs           # dataset for 4
+├── results/                   # summary + per-case results for each experiment
+├── benchmark-results.json     # raw output of benchmark.mjs (same as results/01)
+├── jev_bridge.mjs             # single-ticket Jev check
+├── gpt_router.mjs             # single-ticket LLM check
+└── package.json
 ```
 
-### `jev_bridge.mjs`
+## Limitations
 
-Simple standalone Jev test.
-
-### `gpt_router.mjs`
-
-Simple standalone GPT-5 nano test.
-
-### `tickets.mjs`
-
-The labeled benchmark dataset.
-
-### `benchmark.mjs`
-
-Runs both models, measures latency and accuracy, and produces the benchmark results.
-
----
-
-## What I am trying to learn
-
-This benchmark is not intended to prove that one model is universally better than another.
-
-Jev and GPT-5 nano serve different purposes.
-
-The experiment is meant to explore where a specialized decision model may be useful inside larger AI systems.
-
-A possible architecture might look like:
-
-```text
-LLM
-↓
-Reasoning / generation
-
-Jev
-↓
-Routing / classification / verification / control decisions
-
-Code
-↓
-Deterministic business logic
-```
-
-The interesting question is not:
-
-> "Can Jev replace an LLM?"
-
-It is:
-
-> **"Which decisions inside an AI system actually need an LLM?"**
-
----
-
-## Reproducibility
-
-The complete dataset, model definitions, benchmark code, and raw results are included in this repository.
-
-This makes the benchmark easy to inspect, rerun, or extend with additional models.
+- Four small handcrafted datasets, 40 cases each, labeled by one person.
+- One run per benchmark.
+- No cost comparison.
+- This says nothing about which model is "smarter". It only covers these bounded decisions under these definitions.
